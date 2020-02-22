@@ -25,8 +25,23 @@ public class StudentController {
         return studentJdbc.get(id);
     }
 
+    @GetMapping("/students/studyGroup/{studyGroupId}")
+    public List<Student> getStudentByStudyGroup(@PathVariable int studyGroupId) {
+        return studentJdbc.getAllByStudyGroup(studyGroupId);
+    }
+
     @PostMapping(path = "/students", consumes = "application/json", produces = "application/json")
     public int addStudent(@RequestBody Student student) {
         return studentJdbc.create(student);
+    }
+
+    @PutMapping("/students/{id}")
+    public void updateStudent(@PathVariable int id, @RequestBody Student student) {
+        studentJdbc.update(id, student);
+    }
+
+    @DeleteMapping("/students/{id}")
+    public void deleteStudent(@PathVariable int id) {
+        studentJdbc.delete(id);
     }
 }

@@ -50,6 +50,30 @@ public class StudentJdbc {
         );
     }
 
+    public List<Student> getAllByStudyGroup(int studyGroupId) {
+        return jdbcTemplate.query(
+                "SELECT * FROM student WHERE study_group_id = ?",
+                this::mapStudent, studyGroupId
+        );
+    }
+
+    public void update(int id, Student student) {
+        jdbcTemplate.update(
+                "UPDATE student SET surname = ?, name = ?, second_name = ? WHERE id = ?",
+                student.getSurname(),
+                student.getName(),
+                student.getSecond_name(),
+                id
+        );
+    }
+
+    public void delete(int id) {
+        jdbcTemplate.update(
+                "DELETE FROM student WHERE id = ?",
+                id
+        );
+    }
+
     private Student mapStudent(ResultSet rs, int i) throws SQLException {
         return new Student(
                 rs.getInt("id"),

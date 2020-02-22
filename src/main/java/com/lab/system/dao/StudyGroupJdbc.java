@@ -56,7 +56,8 @@ public class StudyGroupJdbc {
     public void update(int id, StudyGroup studyGroup) {
         jdbcTemplate.update(
                 "UPDATE study_group SET name = ? WHERE id = ?",
-                studyGroup.getName(), studyGroup.getId()
+                studyGroup.getName(),
+                id
         );
     }
 
