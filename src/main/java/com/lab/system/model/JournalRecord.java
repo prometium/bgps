@@ -1,6 +1,6 @@
 package com.lab.system.model;
 
-public class Journal {
+public class JournalRecord {
 
     private int id;
     private int student_id;
@@ -9,7 +9,7 @@ public class Journal {
     private int count;
     private int mark_id;
 
-    public Journal(int id, int student_id, int study_plan_id, boolean in_time, int count, int mark_id) {
+    public JournalRecord(int id, int student_id, int study_plan_id, boolean in_time, int count, int mark_id) {
         this.id = id;
         this.student_id = student_id;
         this.study_plan_id = study_plan_id;

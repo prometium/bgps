@@ -25,14 +25,14 @@ public class StudentController {
         return studentJdbc.get(id);
     }
 
-    @GetMapping("/students/studyGroup/{studyGroupId}")
+    @GetMapping("/students/study_group/{studyGroupId}")
     public List<Student> getStudentByStudyGroup(@PathVariable int studyGroupId) {
         return studentJdbc.getAllByStudyGroup(studyGroupId);
     }
 
     @PostMapping(path = "/students", consumes = "application/json", produces = "application/json")
-    public int addStudent(@RequestBody Student student) {
-        return studentJdbc.create(student);
+    public void addStudent(@RequestBody Student student) {
+        studentJdbc.create(student);
     }
 
     @PutMapping("/students/{id}")

@@ -19,7 +19,8 @@ public class MarkJdbc {
     public Mark get(int id) {
         return jdbcTemplate.queryForObject(
                 "SELECT * FROM mark WHERE id = ?",
-                this::mapMark, id
+                this::mapMark,
+                id
         );
     }
 
@@ -28,13 +29,6 @@ public class MarkJdbc {
                 rs.getInt("id"),
                 rs.getString("name"),
                 rs.getString("value")
-        );
-    }
-
-    public Mark search(String mark) {
-        return jdbcTemplate.queryForObject(
-                "SELECT * FROM mark WHERE name = ?",
-                Mark.class, mark
         );
     }
 }

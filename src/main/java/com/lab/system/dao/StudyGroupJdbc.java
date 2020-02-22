@@ -24,7 +24,7 @@ public class StudyGroupJdbc {
     }
 
     public void create(StudyGroup studyGroup) {
-        Map<String, Object> parameters = new HashMap<String, Object>();
+        Map<String, Object> parameters = new HashMap<>();
 
         parameters.put("id", studyGroup.getId());
         parameters.put("name", studyGroup.getName());
@@ -42,7 +42,8 @@ public class StudyGroupJdbc {
     public StudyGroup get(int id) {
         return jdbcTemplate.queryForObject(
                 "SELECT * FROM study_group WHERE id = ?",
-                this::mapStudyGroup, id
+                this::mapStudyGroup,
+                id
         );
     }
 

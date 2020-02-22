@@ -24,8 +24,8 @@ public class StudentJdbc {
         this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("Student");
     }
 
-    public int create(Student student) {
-        Map<String, Object> parameters = new HashMap<String, Object>();
+    public void create(Student student) {
+        Map<String, Object> parameters = new HashMap<>();
 
         parameters.put("id", student.getId());
         parameters.put("surname", student.getSurname());
@@ -33,7 +33,7 @@ public class StudentJdbc {
         parameters.put("second_name", student.getSecond_name());
         parameters.put("study_group_id", student.getStudy_group_id());
 
-        return simpleJdbcInsert.execute(parameters);
+        simpleJdbcInsert.execute(parameters);
     }
 
     public List<Student> getAll() {
@@ -46,14 +46,26 @@ public class StudentJdbc {
     public Student get(int id) {
         return jdbcTemplate.queryForObject(
                 "SELECT * FROM student WHERE id = ?",
-                this::mapStudent, id
+                this::mapStudent,
+                id
         );
     }
 
     public List<Student> getAllByStudyGroup(int studyGroupId) {
         return jdbcTemplate.query(
                 "SELECT * FROM student WHERE study_group_id = ?",
-                this::mapStudent, studyGroupId
+                this::mapStudent,
+                studyGroupId
+        );
+    }
+
+    private Student mapStudent(ResultSet rs, int i) throws SQLException {
+        return new Student(
+                rs.getInt("id"),
+                rs.getString("surname"),
+                rs.getString("name"),
+                rs.getString("second_name"),
+                rs.getInt("study_group_id")
         );
     }
 
@@ -71,16 +83,6 @@ public class StudentJdbc {
         jdbcTemplate.update(
                 "DELETE FROM student WHERE id = ?",
                 id
-        );
-    }
-
-    private Student mapStudent(ResultSet rs, int i) throws SQLException {
-        return new Student(
-                rs.getInt("id"),
-                rs.getString("surname"),
-                rs.getString("name"),
-                rs.getString("second_name"),
-                rs.getInt("study_group_id")
         );
     }
 }
