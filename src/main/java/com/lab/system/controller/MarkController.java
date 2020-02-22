@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MarkController {
 
     private final MarkJdbc markJdbc;
+
     public MarkController(MarkJdbc markJdbc) {
         this.markJdbc = markJdbc;
     }
@@ -18,5 +19,5 @@ public class MarkController {
     public Mark getMark(@PathVariable int id) {
         Mark mark = markJdbc.get(id);
         return mark;
-    };
+    }
 }
