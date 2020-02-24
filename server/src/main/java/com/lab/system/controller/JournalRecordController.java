@@ -1,0 +1,48 @@
+package com.lab.system.controller;
+
+import com.lab.system.dao.JournalRecordJdbc;
+import com.lab.system.model.JournalRecord;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/journal")
+public class JournalRecordController {
+
+    private final JournalRecordJdbc journalRecordJdbc;
+
+    public JournalRecordController(JournalRecordJdbc journalRecordJdbc) {
+        this.journalRecordJdbc = journalRecordJdbc;
+    }
+
+    @GetMapping("/{id}")
+    public JournalRecord getJournalRecord(@PathVariable int id) {
+        return journalRecordJdbc.get(id);
+    }
+
+    @GetMapping("/student/{studentId}")
+    public List<JournalRecord> getJournalRecordsByStudent(@PathVariable int studentId) {
+        return journalRecordJdbc.getAllByStudent(studentId);
+    }
+
+    @GetMapping("/study_group/{studyGroupId}")
+    public List<JournalRecord> getJournalRecordsByStudyGroup(@PathVariable int studyGroupId) {
+        return journalRecordJdbc.getAllByStudyGroup(studyGroupId);
+    }
+
+    @PostMapping(path = "", consumes = "application/json", produces = "application/json")
+    public long addJournalRecord(@RequestBody JournalRecord journalRecord) {
+        return journalRecordJdbc.create(journalRecord);
+    }
+
+    @PutMapping("/{id}")
+    public void updateJournalRecord(@PathVariable int id, @RequestBody JournalRecord journalRecord) {
+        journalRecordJdbc.update(id, journalRecord);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteJournalRecord(@PathVariable int id) {
+        journalRecordJdbc.delete(id);
+    }
+}
