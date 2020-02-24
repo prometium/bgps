@@ -32,7 +32,9 @@ function StudyGroupsContainer() {
 
   const handleCreation = newStudyGroup => {
     studyGroupController.create(newStudyGroup).then(id => {
-      setStudyGroups([...studyGroups, { id, ...newStudyGroup }]);
+      if (id !== null) {
+        setStudyGroups([...studyGroups, { id, ...newStudyGroup }]);
+      }
     });
   };
 

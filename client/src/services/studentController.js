@@ -8,13 +8,9 @@ const studentController = {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(response => response.json()),
-  getAll: groupId =>
-    executeRequest('/students').then(response => response.json()),
-  getAllByGroup: groupId =>
-    executeRequest(`/students/study_group/${groupId}`).then(response =>
-      response.json()
-    ),
+    }),
+  getAll: resolve => executeRequest('/students'),
+  getAllByGroup: groupId => executeRequest(`/students/study_group/${groupId}`),
   update: (id, student) =>
     executeRequest(`/students/${id}`, {
       method: 'PUT',

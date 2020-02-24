@@ -45,7 +45,9 @@ function StudentsContainer() {
 
   const handleCreation = newStudent => {
     studentController.create(newStudent).then(id => {
-      setStudents([...students, { id, ...newStudent }]);
+      if (id !== undefined) {
+        setStudents([...students, { id, ...newStudent }]);
+      }
     });
   };
 

@@ -8,9 +8,8 @@ const studyGroupController = {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(response => response.json()),
-  getAll: () =>
-    executeRequest('/study_groups').then(response => response.json()),
+    }),
+  getAll: resolve => executeRequest('/study_groups'),
   update: (id, studyGroup) =>
     executeRequest(`/study_groups/${id}`, {
       method: 'PUT',
