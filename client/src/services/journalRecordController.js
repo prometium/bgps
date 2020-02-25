@@ -11,6 +11,7 @@ const journalRecordController = {
     }),
   get: id => executeRequest(`/journal/${id}`),
   getAll: () => executeRequest('/journal'),
+  getAllByStudyGroup: id => executeRequest(`/journal/study_group/${id}`),
   update: (id, student) =>
     executeRequest(`/journal/${id}`, {
       method: 'PUT',

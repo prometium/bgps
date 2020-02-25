@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import useForm from 'src/hooks/useForm';
 import journalRecordController from 'src/services/journalRecordController';
+import studyGroupController from 'src/services/studyGroupController';
 import StudentsJournal from './StudentsJournal';
+import Filter from './Filter';
 
 function StudentsJournalContainer() {
   const [studentsJournal, setStudentsJournal] = React.useState([]);
   const [subjects, setSubjects] = React.useState([]);
+  const [studyGroups, setStudyGroups] = React.useState([]);
 
   React.useEffect(() => {
-    journalRecordController.getAll().then(journalRecords => {
+    studyGroupController.getAll().then(studyGroups => {
+      setStudyGroups(studyGroups);
+    });
+  }, []);
+
+  const { inputs, handleChange } = useForm({
+    study_group_id: '-1'
+  });
+
+  React.useEffect(() => {
+    const handleResult = journalRecords => {
       const studentsMap = {};
       const subjectsMap = {};
 
@@ -33,11 +47,26 @@ function StudentsJournalContainer() {
 
       setStudentsJournal(Object.values(studentsMap));
       setSubjects(Object.keys(subjectsMap));
-    });
-  }, []);
+    };
+
+    if (inputs.study_group_id !== '-1') {
+      journalRecordController
+        .getAllByStudyGroup(inputs.study_group_id)
+        .then(handleResult);
+    } else {
+      journalRecordController.getAll().then(handleResult);
+    }
+  }, [inputs.study_group_id]);
 
   return (
-    <StudentsJournal studentsJournal={studentsJournal} subjects={subjects} />
+    <Fragment>
+      <Filter
+        studyGroups={studyGroups}
+        inputs={inputs}
+        handleChange={handleChange}
+      />
+      <StudentsJournal studentsJournal={studentsJournal} subjects={subjects} />
+    </Fragment>
   );
 }
 

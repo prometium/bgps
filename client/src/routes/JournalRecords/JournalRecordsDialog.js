@@ -50,12 +50,6 @@ function JournalRecordsDialog({
             />
           </Form.Group>
           <Form.Group controlId="journal-mark-id">
-            {/* <Form.Label>Id_оценки</Form.Label>
-            <Form.Control
-              name="mark_id"
-              value={inputs.mark_id}
-              onChange={handleChange}
-            /> */}
             <Form.Label>Оценка</Form.Label>
             <Form.Control
               name="mark_id"

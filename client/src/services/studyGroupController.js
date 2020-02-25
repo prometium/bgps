@@ -18,7 +18,7 @@ const studyGroupController = {
         'Content-Type': 'application/json'
       }
     }),
-  delete: id => executeRequest(`/study_groups//${id}`, { method: 'DELETE' })
+  delete: id => executeRequest(`/study_groups/${id}`, { method: 'DELETE' })
 };
 
 export default studyGroupController;
