@@ -7,6 +7,7 @@ import Filter from './Filter';
 
 function StudentsJournalContainer() {
   const [studentsJournal, setStudentsJournal] = React.useState([]);
+  const [sortedStudentsJournal, setSortedStudentsJournal] = React.useState([]);
   const [subjects, setSubjects] = React.useState([]);
   const [studyGroups, setStudyGroups] = React.useState([]);
 
@@ -17,7 +18,8 @@ function StudentsJournalContainer() {
   }, []);
 
   const { inputs, handleChange } = useForm({
-    study_group_id: '-1'
+    study_group_id: '-1',
+    sort_option: '0'
   });
 
   React.useEffect(() => {
@@ -34,12 +36,15 @@ function StudentsJournalContainer() {
           mark_value: journalRecord.mark_value,
           count: journalRecord.count
         };
+
         if (studentsMapRecord) {
           studentsMapRecord[journalRecord.subject_short_name] = examData;
+          studentsMapRecord.marks_sum += +journalRecord.mark_value || 0;
         } else {
           studentsMap[journalRecord.student_id] = {
             id: journalRecord.student_id,
             student_full_name: journalRecord.student_full_name,
+            marks_sum: +journalRecord.mark_value || 0,
             [journalRecord.subject_short_name]: examData
           };
         }
@@ -58,6 +63,31 @@ function StudentsJournalContainer() {
     }
   }, [inputs.study_group_id]);
 
+  React.useEffect(() => {
+    const sortByName = studentsJournal => {
+      return studentsJournal.sort((studentRecord1, studentRecord2) =>
+        studentRecord1.student_full_name.localeCompare(
+          studentRecord2.student_full_name
+        )
+      );
+    };
+
+    console.log(studentsJournal);
+
+    const sortByMarksSum = studentsJournal => {
+      return studentsJournal.sort(
+        (studentRecord1, studentRecord2) =>
+          studentRecord2.marks_sum - studentRecord1.marks_sum
+      );
+    };
+
+    if (inputs.sort_option === '0') {
+      setSortedStudentsJournal(sortByName(studentsJournal.slice()));
+    } else {
+      setSortedStudentsJournal(sortByMarksSum(studentsJournal.slice()));
+    }
+  }, [inputs.sort_option, studentsJournal]);
+
   return (
     <Fragment>
       <Filter
@@ -65,7 +95,10 @@ function StudentsJournalContainer() {
         inputs={inputs}
         handleChange={handleChange}
       />
-      <StudentsJournal studentsJournal={studentsJournal} subjects={subjects} />
+      <StudentsJournal
+        studentsJournal={sortedStudentsJournal}
+        subjects={subjects}
+      />
     </Fragment>
   );
 }

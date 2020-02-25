@@ -21,6 +21,18 @@ function Filter({ studyGroups, inputs, handleChange }) {
           ))}
         </Form.Control>
       </Form.Group>
+      <Form.Group controlId="sort-options">
+        <Form.Label>Сортировка</Form.Label>
+        <Form.Control
+          name="sort_option"
+          as="select"
+          onChange={handleChange}
+          value={inputs.sort_option}
+        >
+          <option value={0}>По алфавиту</option>
+          <option value={1}>По убыванию оценок</option>
+        </Form.Control>
+      </Form.Group>
     </Form>
   );
 }
