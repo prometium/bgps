@@ -37,12 +37,20 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public void updateStudent(@PathVariable int id, @RequestBody Student student) {
+    public int updateStudent(@PathVariable int id, @RequestBody Student student) {
         studentJdbc.update(id, student);
+        return 0;
+    }
+
+    @PutMapping("/transfer/{id}")
+    public int transferStudent(@PathVariable int id, @RequestBody int studyGroupId) {
+        studentJdbc.transfer(id, studyGroupId);
+        return 0;
     }
 
     @DeleteMapping("/{id}")
-    public void deleteStudent(@PathVariable int id) {
+    public int deleteStudent(@PathVariable int id) {
         studentJdbc.delete(id);
+        return 0;
     }
 }

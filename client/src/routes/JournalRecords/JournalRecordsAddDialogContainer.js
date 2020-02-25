@@ -13,7 +13,7 @@ function JournalAddDialogContainer({
       study_plan_id: '',
       in_time: '',
       count: '',
-      mark_id: ''
+      mark_id: 1
     },
     () => {
       handleSubmitProp(inputs);

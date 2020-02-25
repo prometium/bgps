@@ -12,29 +12,33 @@ function JournalRecordsContainer() {
   }, []);
 
   const handleDelete = id => () => {
-    journalRecordController.delete(id).then(() => {
-      setJournalRecords(
-        journalRecords.filter(journalRecord => journalRecord.id !== id)
-      );
+    journalRecordController.delete(id).then(result => {
+      if (result === 0) {
+        setJournalRecords(
+          journalRecords.filter(journalRecord => journalRecord.id !== id)
+        );
+      }
     });
   };
 
   const handleUpdate = newJournalRecord => {
     journalRecordController
       .update(newJournalRecord.id, newJournalRecord)
-      .then(() => {
-        journalRecordController
-          .get(newJournalRecord.id)
-          .then(updatedJournalRecord => {
-            setJournalRecords(
-              journalRecords.map(journalRecord => {
-                if (journalRecord.id === updatedJournalRecord.id) {
-                  return updatedJournalRecord;
-                }
-                return journalRecord;
-              })
-            );
-          });
+      .then(result => {
+        if (result === 0) {
+          journalRecordController
+            .get(newJournalRecord.id)
+            .then(updatedJournalRecord => {
+              setJournalRecords(
+                journalRecords.map(journalRecord => {
+                  if (journalRecord.id === updatedJournalRecord.id) {
+                    return updatedJournalRecord;
+                  }
+                  return journalRecord;
+                })
+              );
+            });
+        }
       });
   };
 

@@ -35,12 +35,14 @@ public class StudyGroupController {
     }
 
     @PutMapping("/{id}")
-    public void updateStudyGroup(@PathVariable int id, @RequestBody StudyGroup studyGroup) {
+    public int updateStudyGroup(@PathVariable int id, @RequestBody StudyGroup studyGroup) {
         studyGroupJdbc.update(id, studyGroup);
+        return 0;
     }
 
     @DeleteMapping("/{id}")
-    public void deleteStudyGroup(@PathVariable int id) {
+    public int deleteStudyGroup(@PathVariable int id) {
         studyGroupJdbc.delete(id);
+        return 0;
     }
 }

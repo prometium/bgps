@@ -42,12 +42,14 @@ public class JournalRecordController {
     }
 
     @PutMapping("/{id}")
-    public void updateJournalRecord(@PathVariable int id, @RequestBody JournalRecord journalRecord) {
+    public int updateJournalRecord(@PathVariable int id, @RequestBody JournalRecord journalRecord) {
         journalRecordJdbc.update(id, journalRecord);
+        return 0;
     }
 
     @DeleteMapping("/{id}")
-    public void deleteJournalRecord(@PathVariable int id) {
+    public int deleteJournalRecord(@PathVariable int id) {
         journalRecordJdbc.delete(id);
+        return 0;
     }
 }

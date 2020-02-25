@@ -2,8 +2,16 @@ import React, { Fragment } from 'react';
 import { Table, ButtonGroup, Button } from 'react-bootstrap';
 import StudentsEditDialog from './StudentsEditDialogContainer';
 import StudentsAddDialog from './StudentsAddDialogContainer';
+import DropDownMenu from './DropDownMenu';
 
-function Students({ students, handleDelete, handleUpdate, handleCreation }) {
+function Students({
+  students,
+  studyGroups,
+  handleDelete,
+  handleUpdate,
+  handleCreation,
+  handleTransfer
+}) {
   const [editableStudent, setEditableStudent] = React.useState();
 
   const [show1, setShow1] = React.useState(false);
@@ -46,6 +54,12 @@ function Students({ students, handleDelete, handleUpdate, handleCreation }) {
                   <Button onClick={handleDelete(student.id)} variant="danger">
                     Удалить
                   </Button>
+                  <DropDownMenu
+                    studentId={student.id}
+                    studyGroupId={student.study_group_id}
+                    studyGroups={studyGroups}
+                    handleTransfer={handleTransfer}
+                  />
                 </ButtonGroup>
               </td>
             </tr>

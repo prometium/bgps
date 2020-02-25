@@ -90,6 +90,14 @@ public class StudentJdbc {
         );
     }
 
+    public void transfer(int id, int studyGroupId) {
+        jdbcTemplate.update(
+                "UPDATE student SET study_group_id = ? WHERE id = ?",
+                studyGroupId,
+                id
+        );
+    }
+
     public void delete(int id) {
         jdbcTemplate.update(
                 "DELETE FROM student WHERE id = ?",

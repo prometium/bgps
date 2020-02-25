@@ -13,21 +13,27 @@ function StudyGroupsContainer() {
 
   const handleDelete = id => () => {
     studyGroupController.delete(id).then(result => {
-      setStudyGroups(studyGroups.filter(studyGroup => studyGroup.id !== id));
+      if (result === 0) {
+        setStudyGroups(studyGroups.filter(studyGroup => studyGroup.id !== id));
+      }
     });
   };
 
   const handleUpdate = newStudyGroup => {
-    studyGroupController.update(newStudyGroup.id, newStudyGroup).then(() => {
-      setStudyGroups(
-        studyGroups.map(studyGroup => {
-          if (studyGroup.id === newStudyGroup.id) {
-            return newStudyGroup;
-          }
-          return studyGroup;
-        })
-      );
-    });
+    studyGroupController
+      .update(newStudyGroup.id, newStudyGroup)
+      .then(result => {
+        if (result === 0) {
+          setStudyGroups(
+            studyGroups.map(studyGroup => {
+              if (studyGroup.id === newStudyGroup.id) {
+                return newStudyGroup;
+              }
+              return studyGroup;
+            })
+          );
+        }
+      });
   };
 
   const handleCreation = newStudyGroup => {
