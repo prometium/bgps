@@ -39,14 +39,19 @@ public class StudentJdbc {
 
     public List<Student> getAll() {
         return jdbcTemplate.query(
-                "SELECT * FROM student",
+                "SELECT student.id, surname, student.name, second_name, study_group_id, study_group.name " +
+                        "AS study_group " +
+                        "FROM student INNER JOIN study_group ON student.study_group_id = study_group.id",
                 this::mapStudent
         );
     }
 
     public Student get(int id) {
         return jdbcTemplate.queryForObject(
-                "SELECT * FROM student WHERE id = ?",
+                "SELECT student.id, surname, student.name, second_name, study_group_id, study_group.name " +
+                        "AS study_group " +
+                        "FROM student INNER JOIN study_group ON student.study_group_id = study_group.id " +
+                        "WHERE student.id = ?",
                 this::mapStudent,
                 id
         );
@@ -54,7 +59,10 @@ public class StudentJdbc {
 
     public List<Student> getAllByStudyGroup(int studyGroupId) {
         return jdbcTemplate.query(
-                "SELECT * FROM student WHERE study_group_id = ?",
+                "SELECT student.id, surname, student.name, second_name, study_group_id, study_group.name " +
+                        "AS study_group " +
+                        "FROM student INNER JOIN study_group ON student.study_group_id = study_group.id " +
+                        "WHERE study_group_id = ?",
                 this::mapStudent,
                 studyGroupId
         );
@@ -66,16 +74,18 @@ public class StudentJdbc {
                 rs.getString("surname"),
                 rs.getString("name"),
                 rs.getString("second_name"),
-                rs.getInt("study_group_id")
+                rs.getInt("study_group_id"),
+                rs.getString("study_group")
         );
     }
 
     public void update(int id, Student student) {
         jdbcTemplate.update(
-                "UPDATE student SET surname = ?, name = ?, second_name = ? WHERE id = ?",
+                "UPDATE student SET surname = ?, name = ?, second_name = ?, study_group_id = ? WHERE id = ?",
                 student.getSurname(),
                 student.getName(),
                 student.getSecond_name(),
+                student.getStudy_group_id(),
                 id
         );
     }

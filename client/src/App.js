@@ -10,21 +10,12 @@ import {
 } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
 import ErrorBoundary from 'src/ErrorBoundary';
-import Students from 'src/Students';
-import StudyGroups from 'src/StudyGroups';
-import JournalTable from './JournalTable';
+import Students from 'src/routes/Students';
+import StudyGroups from 'src/routes/StudyGroups';
+import JournalRecords from 'src/routes/JournalRecords';
+import StudentsJournal from 'src/routes/StudentsJournal';
 
 function App() {
-  const [activeGroupId, setActiveGroupId] = React.useState(1);
-
-  const [students, setStudents] = React.useState([]);
-
-  // React.useEffect(() => {
-  //   student.getAllByGroup(activeGroupId).then(students => {
-  //     setStudents(students);
-  //   });
-  // }, [activeGroupId]);
-
   return (
     <div className="App">
       <ErrorBoundary>
@@ -39,6 +30,9 @@ function App() {
                 </Nav.Link>
                 <Nav.Link as={Link} to="/students">
                   Студенты
+                </Nav.Link>
+                <Nav.Link as={Link} to="/journal_records">
+                  Записи журнала
                 </Nav.Link>
                 <Nav.Link as={Link} to="/journal">
                   Журнал
@@ -56,32 +50,15 @@ function App() {
             <Route path="/students">
               <Students />
             </Route>
-            <Route path="/journal"></Route>
+            <Route path="/journal_records">
+              <JournalRecords />
+            </Route>
+            <Route path="/journal">
+              <StudentsJournal />
+            </Route>
           </Switch>
         </Router>
       </ErrorBoundary>
-      {/* <StudyGroups /> */}
-      {/* <button
-        onClick={() => {
-          setActiveGroupId(0);
-        }}
-      >
-        Группа 1
-      </button>
-      <button
-        onClick={() => {
-          setActiveGroupId(1);
-        }}
-      >
-        Группа 2
-      </button>
-      <button
-        onClick={() => {
-          setActiveGroupId(2);
-        }}
-      >
-        Группа 3
-      </button> */}
     </div>
   );
 }

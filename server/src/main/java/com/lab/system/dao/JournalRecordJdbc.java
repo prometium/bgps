@@ -28,7 +28,7 @@ public class JournalRecordJdbc {
     public long create(JournalRecord journalRecord) {
         Map<String, Object> parameters = new HashMap<>();
 
-        parameters.put("student_id", journalRecord.getMark_id());
+        parameters.put("student_id", journalRecord.getStudent_id());
         parameters.put("study_plan_id", journalRecord.getStudy_plan_id());
         parameters.put("in_time", journalRecord.isIn_time());
         parameters.put("count", journalRecord.getCount());
@@ -37,9 +37,35 @@ public class JournalRecordJdbc {
         return simpleJdbcInsert.executeAndReturnKey(parameters).longValue();
     }
 
+    public List<JournalRecord> getAll() {
+        return jdbcTemplate.query(
+                "SELECT journal.id, student_id, study_plan_id, in_time, count, mark_id, " +
+                        "CONCAT(student.surname, ' ', student.name, ' ', student.second_name) AS student_full_name, " +
+                        "subject.name AS subject_name, subject.short_name AS subject_short_name, " +
+                        "exam_type.type AS exam_type, mark.name AS mark_name, mark.value AS mark_value " +
+                        "FROM journal " +
+                        "INNER JOIN student ON journal.student_id = student.id " +
+                        "INNER JOIN study_plan ON journal.study_plan_id = study_plan.id " +
+                        "INNER JOIN subject ON study_plan.subject_id = subject.id " +
+                        "INNER JOIN exam_type ON study_plan.exam_type_id = exam_type.id " +
+                        "INNER JOIN mark ON journal.mark_id = mark.id ",
+                this::mapJournal
+        );
+    }
+
     public JournalRecord get(int id) {
         return jdbcTemplate.queryForObject(
-                "SELECT * FROM journal WHERE id = ?",
+                "SELECT journal.id, student_id, study_plan_id, in_time, count, mark_id, " +
+                        "CONCAT(student.surname, ' ', student.name, ' ', student.second_name) AS student_full_name, " +
+                        "subject.name AS subject_name, subject.short_name AS subject_short_name, " +
+                        "exam_type.type AS exam_type, mark.name AS mark_name, mark.value AS mark_value " +
+                        "FROM journal " +
+                        "INNER JOIN student ON journal.student_id = student.id " +
+                        "INNER JOIN study_plan ON journal.study_plan_id = study_plan.id " +
+                        "INNER JOIN subject ON study_plan.subject_id = subject.id " +
+                        "INNER JOIN exam_type ON study_plan.exam_type_id = exam_type.id " +
+                        "INNER JOIN mark ON journal.mark_id = mark.id " +
+                        "WHERE journal.id = ?",
                 this::mapJournal,
                 id
         );
@@ -47,7 +73,17 @@ public class JournalRecordJdbc {
 
     public List<JournalRecord> getAllByStudent(int studentId) {
         return jdbcTemplate.query(
-                "SELECT * FROM journal WHERE student_id = ?",
+                "SELECT journal.id, student_id, study_plan_id, in_time, count, mark_id, " +
+                        "CONCAT(student.surname, ' ', student.name, ' ', student.second_name) AS student_full_name, " +
+                        "subject.name AS subject_name, subject.short_name AS subject_short_name, " +
+                        "exam_type.type AS exam_type, mark.name AS mark_name, mark.value AS mark_value " +
+                        "FROM journal " +
+                        "INNER JOIN student ON journal.student_id = student.id " +
+                        "INNER JOIN study_plan ON journal.study_plan_id = study_plan.id " +
+                        "INNER JOIN subject ON study_plan.subject_id = subject.id " +
+                        "INNER JOIN exam_type ON study_plan.exam_type_id = exam_type.id " +
+                        "INNER JOIN mark ON journal.mark_id = mark.id " +
+                        "WHERE student_id = ?",
                 this::mapJournal,
                 studentId
         );
@@ -55,8 +91,16 @@ public class JournalRecordJdbc {
 
     public List<JournalRecord> getAllByStudyGroup(int studyGroupId) {
         return jdbcTemplate.query(
-                "SELECT journal.id, student_id, study_plan_id, in_time, count, mark_id " +
-                        "FROM journal INNER JOIN student ON journal.student_id = student.id " +
+                "SELECT journal.id, student_id, study_plan_id, in_time, count, mark_id, " +
+                        "CONCAT(student.surname, ' ', student.name, ' ', student.second_name) AS student_full_name, " +
+                        "subject.name AS subject_name, subject.short_name AS subject_short_name, " +
+                        "exam_type.type AS exam_type, mark.name AS mark_name, mark.value AS mark_value " +
+                        "FROM journal " +
+                        "INNER JOIN student ON journal.student_id = student.id " +
+                        "INNER JOIN study_plan ON journal.study_plan_id = study_plan.id " +
+                        "INNER JOIN subject ON study_plan.subject_id = subject.id " +
+                        "INNER JOIN exam_type ON study_plan.exam_type_id = exam_type.id " +
+                        "INNER JOIN mark ON journal.mark_id = mark.id " +
                         "WHERE study_group_id = ?",
                 this::mapJournal,
                 studyGroupId
@@ -83,7 +127,13 @@ public class JournalRecordJdbc {
                 rs.getInt("study_plan_id"),
                 rs.getBoolean("in_time"),
                 rs.getInt("count"),
-                rs.getInt("mark_id")
+                rs.getInt("mark_id"),
+                rs.getString("student_full_name"),
+                rs.getString("subject_name"),
+                rs.getString("subject_short_name"),
+                rs.getString("exam_type"),
+                rs.getString("mark_name"),
+                rs.getString("mark_value")
         );
     }
 

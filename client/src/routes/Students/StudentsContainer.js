@@ -1,5 +1,4 @@
 import React from 'react';
-import studyGroupController from 'src/services/studyGroupController';
 import studentController from 'src/services/studentController';
 import Students from './Students';
 
@@ -7,20 +6,8 @@ function StudentsContainer() {
   const [students, setStudents] = React.useState([]);
 
   React.useEffect(() => {
-    studyGroupController.getAll().then(studyGroups => {
-      studentController.getAll().then(students => {
-        setStudents(
-          students.map(student => ({
-            ...student,
-            study_group:
-              studyGroups[
-                studyGroups.findIndex(
-                  studyGroup => (studyGroup.id = student.id)
-                )
-              ].name
-          }))
-        );
-      });
+    studentController.getAll().then(students => {
+      setStudents(students);
     });
   }, []);
 
@@ -32,21 +19,25 @@ function StudentsContainer() {
 
   const handleUpdate = newStudent => {
     studentController.update(newStudent.id, newStudent).then(() => {
-      setStudents(
-        students.map(student => {
-          if (student.id === newStudent.id) {
-            return newStudent;
-          }
-          return student;
-        })
-      );
+      studentController.get(newStudent.id).then(updatedStudent => {
+        setStudents(
+          students.map(student => {
+            if (student.id === updatedStudent.id) {
+              return updatedStudent;
+            }
+            return student;
+          })
+        );
+      });
     });
   };
 
   const handleCreation = newStudent => {
     studentController.create(newStudent).then(id => {
       if (id !== undefined) {
-        setStudents([...students, { id, ...newStudent }]);
+        studentController.get(id).then(student => {
+          setStudents([...students, student]);
+        });
       }
     });
   };

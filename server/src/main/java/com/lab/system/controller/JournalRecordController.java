@@ -16,6 +16,11 @@ public class JournalRecordController {
         this.journalRecordJdbc = journalRecordJdbc;
     }
 
+    @GetMapping("")
+    public List<JournalRecord> getJournalRecords() {
+        return journalRecordJdbc.getAll();
+    }
+
     @GetMapping("/{id}")
     public JournalRecord getJournalRecord(@PathVariable int id) {
         return journalRecordJdbc.get(id);

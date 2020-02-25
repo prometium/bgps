@@ -12,7 +12,7 @@ function StudyGroupsContainer() {
   }, []);
 
   const handleDelete = id => () => {
-    studyGroupController.delete(id).then(() => {
+    studyGroupController.delete(id).then(result => {
       setStudyGroups(studyGroups.filter(studyGroup => studyGroup.id !== id));
     });
   };
@@ -32,7 +32,7 @@ function StudyGroupsContainer() {
 
   const handleCreation = newStudyGroup => {
     studyGroupController.create(newStudyGroup).then(id => {
-      if (id !== null) {
+      if (id !== undefined) {
         setStudyGroups([...studyGroups, { id, ...newStudyGroup }]);
       }
     });

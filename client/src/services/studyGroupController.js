@@ -9,7 +9,7 @@ const studyGroupController = {
         'Content-Type': 'application/json'
       }
     }),
-  getAll: resolve => executeRequest('/study_groups'),
+  getAll: () => executeRequest('/study_groups'),
   update: (id, studyGroup) =>
     executeRequest(`/study_groups/${id}`, {
       method: 'PUT',

@@ -8,20 +8,18 @@ const journalRecordController = {
       headers: {
         'Content-Type': 'application/json'
       }
-    })
-  //   getAll: resolve => executeRequest('/students', resolve),
-  //   getAllByGroup: (groupId, resolve) =>
-  //     executeRequest(`/students/study_group/${groupId}`, resolve),
-  //   update: (id, student, resolve) =>
-  //     executeRequest(`/students/${id}`, resolve, {
-  //       method: 'PUT',
-  //       body: JSON.stringify(student),
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       }
-  //     }),
-  //   delete: (id, resolve) =>
-  //     executeRequest(`/students/${id}`, resolve, { method: 'DELETE' })
+    }),
+  get: id => executeRequest(`/journal/${id}`),
+  getAll: () => executeRequest('/journal'),
+  update: (id, student) =>
+    executeRequest(`/journal/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(student),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }),
+  delete: id => executeRequest(`/journal/${id}`, { method: 'DELETE' })
 };
 
 export default journalRecordController;

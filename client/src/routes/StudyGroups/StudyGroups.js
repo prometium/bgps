@@ -1,18 +1,23 @@
 import React, { Fragment } from 'react';
 import { Table, ButtonGroup, Button } from 'react-bootstrap';
-import StudentsEditDialog from './StudentsEditDialog.js';
-import StudentsAddDialog from './StudentsAddDialog';
+import StudyGroupsEditDialog from './StudyGroupsEditDialogContainer';
+import StudyGroupsAddDialog from './StudyGroupsAddDialogContainer';
 
-function Students({ students, handleDelete, handleUpdate, handleCreation }) {
-  const [editableStudent, setEditableStudent] = React.useState();
+function StudyGroups({
+  studyGroups,
+  handleDelete,
+  handleUpdate,
+  handleCreation
+}) {
+  const [editableStudyGroup, setEditableStudyGroup] = React.useState();
 
   const [show1, setShow1] = React.useState(false);
 
   const handleClose1 = () => setShow1(false);
 
-  const handleShow1 = student => () => {
+  const handleShow1 = studyGroup => () => {
     setShow1(true);
-    setEditableStudent(student);
+    setEditableStudyGroup(studyGroup);
   };
 
   const [show2, setShow2] = React.useState(false);
@@ -29,21 +34,24 @@ function Students({ students, handleDelete, handleUpdate, handleCreation }) {
         <thead>
           <tr>
             <th>#</th>
-            <th>ФИО</th>
-            <th>Группа</th>
+            <th>Название</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {students.map(student => (
-            <tr key={student.id}>
-              <td>{student.id}</td>
-              <td>{`${student.surname} ${student.name} ${student.second_name}`}</td>
-              <td>{student.study_group}</td>
+          {studyGroups.map(studyGroup => (
+            <tr key={studyGroup.id}>
+              <td>{studyGroup.id}</td>
+              <td>{studyGroup.name}</td>
               <td>
                 <ButtonGroup>
-                  <Button onClick={handleShow1(student)}>Редактировать</Button>
-                  <Button onClick={handleDelete(student.id)} variant="danger">
+                  <Button onClick={handleShow1(studyGroup)}>
+                    Редактировать
+                  </Button>
+                  <Button
+                    onClick={handleDelete(studyGroup.id)}
+                    variant="danger"
+                  >
                     Удалить
                   </Button>
                 </ButtonGroup>
@@ -54,17 +62,17 @@ function Students({ students, handleDelete, handleUpdate, handleCreation }) {
       </Table>
       <Button
         onClick={handleShow2}
-        style={{ position: 'absolute', bottom: 24, right: 24 }}
+        style={{ position: 'fixed', bottom: 24, right: 24 }}
       >
         Создать
       </Button>
-      <StudentsEditDialog
+      <StudyGroupsEditDialog
         show={show1}
         handleClose={handleClose1}
-        student={editableStudent}
+        studyGroup={editableStudyGroup}
         handleSubmit={handleUpdate}
       />
-      <StudentsAddDialog
+      <StudyGroupsAddDialog
         show={show2}
         handleClose={handleClose2}
         handleSubmit={handleCreation}
@@ -73,4 +81,4 @@ function Students({ students, handleDelete, handleUpdate, handleCreation }) {
   );
 }
 
-export default Students;
+export default StudyGroups;

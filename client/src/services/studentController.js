@@ -9,7 +9,8 @@ const studentController = {
         'Content-Type': 'application/json'
       }
     }),
-  getAll: resolve => executeRequest('/students'),
+  get: id => executeRequest(`/students/${id}`),
+  getAll: () => executeRequest('/students'),
   getAllByGroup: groupId => executeRequest(`/students/study_group/${groupId}`),
   update: (id, student) =>
     executeRequest(`/students/${id}`, {

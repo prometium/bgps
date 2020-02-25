@@ -14,8 +14,8 @@ const executeRequest = (endpoint, rest) => {
     .catch(error => {
       if (error.ok !== undefined) {
         error.text().then(errorMessage => {
-          console.error(errorMessage);
           alert(errorMessage);
+          console.error(errorMessage);
         });
       }
     });
