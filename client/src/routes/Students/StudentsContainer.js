@@ -9,7 +9,9 @@ function StudentsContainer() {
 
   React.useEffect(() => {
     studentController.getAll().then(students => {
-      setStudents(students);
+      if (students) {
+        setStudents(students);
+      }
     });
 
     studyGroupController.getAll().then(studyGroups => {

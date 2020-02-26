@@ -7,7 +7,9 @@ function JournalRecordsContainer() {
 
   React.useEffect(() => {
     journalRecordController.getAll().then(journalRecords => {
-      setJournalRecords(journalRecords);
+      if (journalRecords) {
+        setJournalRecords(journalRecords);
+      }
     });
   }, []);
 

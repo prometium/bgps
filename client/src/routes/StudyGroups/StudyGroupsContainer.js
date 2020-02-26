@@ -7,7 +7,9 @@ function StudyGroupsContainer() {
 
   React.useEffect(() => {
     studyGroupController.getAll().then(studyGroups => {
-      setStudyGroups(studyGroups);
+      if (studyGroups) {
+        setStudyGroups(studyGroups);
+      }
     });
   }, []);
 
