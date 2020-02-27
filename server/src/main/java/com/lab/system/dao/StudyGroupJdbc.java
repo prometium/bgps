@@ -55,16 +55,16 @@ public class StudyGroupJdbc {
         );
     }
 
-    public void update(int id, StudyGroup studyGroup) {
-        jdbcTemplate.update(
+    public int update(int id, StudyGroup studyGroup) {
+        return jdbcTemplate.update(
                 "UPDATE study_group SET name = ? WHERE id = ?",
                 studyGroup.getName(),
                 id
         );
     }
 
-    public void delete(int id) {
-        jdbcTemplate.update(
+    public int delete(int id) {
+        return jdbcTemplate.update(
                 "DELETE FROM study_group WHERE id = ?",
                 id
         );

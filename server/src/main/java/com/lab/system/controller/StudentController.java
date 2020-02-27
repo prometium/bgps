@@ -38,19 +38,16 @@ public class StudentController {
 
     @PutMapping("/{id}")
     public int updateStudent(@PathVariable int id, @RequestBody Student student) {
-        studentJdbc.update(id, student);
-        return 0;
+        return studentJdbc.update(id, student);
     }
 
     @PutMapping("/transfer/{id}")
     public int transferStudent(@PathVariable int id, @RequestBody int studyGroupId) {
-        studentJdbc.transfer(id, studyGroupId);
-        return 0;
+        return studentJdbc.transfer(id, studyGroupId);
     }
 
     @DeleteMapping("/{id}")
     public int deleteStudent(@PathVariable int id) {
-        studentJdbc.delete(id);
-        return 0;
+        return studentJdbc.delete(id);
     }
 }

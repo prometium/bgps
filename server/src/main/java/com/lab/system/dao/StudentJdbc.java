@@ -89,8 +89,8 @@ public class StudentJdbc {
         );
     }
 
-    public void update(int id, Student student) {
-        jdbcTemplate.update(
+    public int update(int id, Student student) {
+        return jdbcTemplate.update(
                 "UPDATE student SET surname = ?, name = ?, second_name = ?, study_group_id = ? WHERE id = ?",
                 student.getSurname(),
                 student.getName(),
@@ -100,16 +100,16 @@ public class StudentJdbc {
         );
     }
 
-    public void transfer(int id, int studyGroupId) {
-        jdbcTemplate.update(
+    public int transfer(int id, int studyGroupId) {
+        return jdbcTemplate.update(
                 "UPDATE student SET study_group_id = ? WHERE id = ?",
                 studyGroupId,
                 id
         );
     }
 
-    public void delete(int id) {
-        jdbcTemplate.update(
+    public int delete(int id) {
+        return jdbcTemplate.update(
                 "DELETE FROM student WHERE id = ?",
                 id
         );

@@ -15,7 +15,7 @@ function StudyGroupsContainer() {
 
   const handleDelete = id => () => {
     studyGroupController.delete(id).then(result => {
-      if (result === 0) {
+      if (result === 1) {
         setStudyGroups(studyGroups.filter(studyGroup => studyGroup.id !== id));
       }
     });
@@ -25,7 +25,7 @@ function StudyGroupsContainer() {
     studyGroupController
       .update(newStudyGroup.id, newStudyGroup)
       .then(result => {
-        if (result === 0) {
+        if (result === 1) {
           setStudyGroups(
             studyGroups.map(studyGroup => {
               if (studyGroup.id === newStudyGroup.id) {

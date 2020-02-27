@@ -107,8 +107,8 @@ public class JournalRecordJdbc {
         );
     }
 
-    public void update(int id, JournalRecord journalRecord) {
-        jdbcTemplate.update(
+    public int update(int id, JournalRecord journalRecord) {
+        return jdbcTemplate.update(
                 "UPDATE journal SET student_id = ?, study_plan_id = ?, in_time = ?, count = ?, mark_id = ?" +
                         "WHERE id = ?",
                 journalRecord.getStudent_id(),
@@ -137,8 +137,8 @@ public class JournalRecordJdbc {
         );
     }
 
-    public void delete(int id) {
-        jdbcTemplate.update(
+    public int delete(int id) {
+        return jdbcTemplate.update(
                 "DELETE FROM journal WHERE id = ?",
                 id
         );

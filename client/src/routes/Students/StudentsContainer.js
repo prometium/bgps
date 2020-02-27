@@ -21,7 +21,7 @@ function StudentsContainer() {
 
   const handleDelete = id => () => {
     studentController.delete(id).then(result => {
-      if (result === 0) {
+      if (result === 1) {
         setStudents(students.filter(student => student.id !== id));
       }
     });
@@ -29,7 +29,7 @@ function StudentsContainer() {
 
   const handleUpdate = newStudent => {
     studentController.update(newStudent.id, newStudent).then(result => {
-      if (result === 0) {
+      if (result === 1) {
         studentController.get(newStudent.id).then(updatedStudent => {
           setStudents(
             students.map(student => {
@@ -56,7 +56,7 @@ function StudentsContainer() {
 
   const handleTransfer = (id, studyGroupId) => () => {
     studentController.transfer(id, studyGroupId).then(result => {
-      if (result === 0) {
+      if (result === 1) {
         studentController.get(id).then(updatedStudent => {
           setStudents(
             students.map(student => {

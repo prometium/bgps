@@ -15,7 +15,7 @@ function JournalRecordsContainer() {
 
   const handleDelete = id => () => {
     journalRecordController.delete(id).then(result => {
-      if (result === 0) {
+      if (result === 1) {
         setJournalRecords(
           journalRecords.filter(journalRecord => journalRecord.id !== id)
         );
@@ -27,7 +27,7 @@ function JournalRecordsContainer() {
     journalRecordController
       .update(newJournalRecord.id, newJournalRecord)
       .then(result => {
-        if (result === 0) {
+        if (result === 1) {
           journalRecordController
             .get(newJournalRecord.id)
             .then(updatedJournalRecord => {

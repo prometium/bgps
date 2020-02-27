@@ -42,7 +42,7 @@ function App() {
           </Navbar>
           <Switch>
             <Route exact path="/">
-              <Redirect to="/students" />
+              <Redirect to="/study_groups" />
             </Route>
             <Route path="/study_groups">
               <StudyGroups />
