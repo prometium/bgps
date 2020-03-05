@@ -78,8 +78,6 @@ function StudentsJournalContainer() {
       );
     };
 
-    console.log(studentsJournal);
-
     const sortByMarksSum = studentsJournal => {
       return studentsJournal.sort(
         (studentRecord1, studentRecord2) =>

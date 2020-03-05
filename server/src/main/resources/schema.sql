@@ -139,7 +139,27 @@ VALUES (1, 'Отлично', 5),
        (7, 'Неявка', '');
 
 INSERT INTO study_group (id, name)
-VALUES (1, 'ИКБО-02-16');
+VALUES (1, 'ИКБО-02-16'),
+       (2, 'ИКБО-03-16');
+
+INSERT INTO student (id, study_group_id, surname, name, second_name)
+VALUES (1, 1, 'Красновский', 'Александр', 'Михайлович'),
+       (2, 2, 'Иванов', 'Иван', 'Иванович'),
+       (3, 1, 'Слепушко', 'Артем', 'Алексеевич');
+
+INSERT INTO journal (id, study_plan_id, mark_id, student_id, count, in_time)
+VALUES (1, 2, 1, 1, 0, true),
+       (2, 3, 1, 1, 0, true),
+       (3, 4, 1, 1, 0, true),
+       (4, 5, 5, 1, 0, true),
+       (5, 2, 2, 2, 0, true),
+       (6, 3, 4, 2, 1, true),
+       (7, 4, 3, 2, 2, true),
+       (8, 5, 6, 2, 2, true),
+       (9, 2, 2, 3, 0, true),
+       (10, 3, 1, 3, 1, false),
+       (11, 4, 1, 3, 2, true),
+       (12, 5, 5, 3, 2, true);
 
 INSERT INTO student_local (id, study_group_id, surname, name, second_name)
 VALUES (666, 1, 'Красновский', 'Александр', 'Михайлович');
