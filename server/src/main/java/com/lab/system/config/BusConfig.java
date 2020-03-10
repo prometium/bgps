@@ -1,4 +1,3 @@
-/*
 package com.lab.system.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -72,7 +71,6 @@ public class BusConfig {
 
     @Bean
     public EntityDao entityDao(EntityNameConverter entityNameConverter, JdbcTemplate jdbcTemplate) {
-        return new EntityJdbc(entityNameConverter, null, jdbcTemplate);
+        return new EntityJdbc(entityNameConverter, jdbcTemplate);
     }
 }
-*/

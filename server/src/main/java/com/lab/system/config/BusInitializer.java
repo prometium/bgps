@@ -1,4 +1,3 @@
-/*
 package com.lab.system.config;
 
 import com.lab.system.dao.StudentJdbc;
@@ -28,10 +27,9 @@ public class BusInitializer {
     }
 
     private <T> void initEntity(String name, List<T> data) throws IOException {
-        replicator.initializeEntity(name, false);
+        replicator.initializeEntity(name);
         for (T row : data) {
             replicator.addRow(name, row);
         }
     }
 }
-*/

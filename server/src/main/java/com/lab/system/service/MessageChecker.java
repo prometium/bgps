@@ -1,4 +1,3 @@
-/*
 package com.lab.system.service;
 
 import net.progruzovik.bus.message.RestReceiver;
@@ -23,4 +22,3 @@ public class MessageChecker {
         lastCheckTime = restReceiver.receiveMessages(lastCheckTime);
     }
 }
-*/
