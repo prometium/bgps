@@ -28,30 +28,34 @@ function JournalRecordsContainer() {
       .update(newJournalRecord.id, newJournalRecord)
       .then(result => {
         if (result === 1) {
-          journalRecordController
-            .get(newJournalRecord.id)
-            .then(updatedJournalRecord => {
-              setJournalRecords(
-                journalRecords.map(journalRecord => {
-                  if (journalRecord.id === updatedJournalRecord.id) {
-                    return updatedJournalRecord;
-                  }
-                  return journalRecord;
-                })
-              );
-            });
+          return journalRecordController.get(newJournalRecord.id);
         }
+        return Promise.reject(result);
+      })
+      .then(updatedJournalRecord => {
+        setJournalRecords(
+          journalRecords.map(journalRecord => {
+            if (journalRecord.id === updatedJournalRecord.id) {
+              return updatedJournalRecord;
+            }
+            return journalRecord;
+          })
+        );
       });
   };
 
   const handleCreation = newJournalRecord => {
-    journalRecordController.create(newJournalRecord).then(id => {
-      if (id !== undefined) {
-        journalRecordController.get(id).then(journalRecord => {
-          setJournalRecords([...journalRecords, journalRecord]);
-        });
-      }
-    });
+    journalRecordController
+      .create(newJournalRecord)
+      .then(id => {
+        if (id !== undefined) {
+          return journalRecordController.get(id);
+        }
+        return Promise.reject(id);
+      })
+      .then(journalRecord => {
+        setJournalRecords([...journalRecords, journalRecord]);
+      });
   };
 
   return (
