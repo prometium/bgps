@@ -7,31 +7,22 @@ function JournalRecordsContainer() {
 
   React.useEffect(() => {
     journalRecordController.getAll().then(journalRecords => {
-      if (journalRecords) {
-        setJournalRecords(journalRecords);
-      }
+      setJournalRecords(journalRecords);
     });
   }, []);
 
   const handleDelete = id => () => {
     journalRecordController.delete(id).then(result => {
-      if (result === 1) {
-        setJournalRecords(
-          journalRecords.filter(journalRecord => journalRecord.id !== id)
-        );
-      }
+      setJournalRecords(
+        journalRecords.filter(journalRecord => journalRecord.id !== id)
+      );
     });
   };
 
   const handleUpdate = newJournalRecord => {
     journalRecordController
       .update(newJournalRecord.id, newJournalRecord)
-      .then(result => {
-        if (result === 1) {
-          return journalRecordController.get(newJournalRecord.id);
-        }
-        return Promise.reject(result);
-      })
+      .then(result => journalRecordController.get(newJournalRecord.id))
       .then(updatedJournalRecord => {
         setJournalRecords(
           journalRecords.map(journalRecord => {
@@ -47,12 +38,7 @@ function JournalRecordsContainer() {
   const handleCreation = newJournalRecord => {
     journalRecordController
       .create(newJournalRecord)
-      .then(id => {
-        if (id !== undefined) {
-          return journalRecordController.get(id);
-        }
-        return Promise.reject(id);
-      })
+      .then(id => journalRecordController.get(id))
       .then(journalRecord => {
         setJournalRecords([...journalRecords, journalRecord]);
       });

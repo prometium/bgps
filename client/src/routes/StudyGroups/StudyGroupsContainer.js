@@ -7,17 +7,13 @@ function StudyGroupsContainer() {
 
   React.useEffect(() => {
     studyGroupController.getAll().then(studyGroups => {
-      if (studyGroups) {
-        setStudyGroups(studyGroups);
-      }
+      setStudyGroups(studyGroups);
     });
   }, []);
 
   const handleDelete = id => () => {
     studyGroupController.delete(id).then(result => {
-      if (result === 1) {
-        setStudyGroups(studyGroups.filter(studyGroup => studyGroup.id !== id));
-      }
+      setStudyGroups(studyGroups.filter(studyGroup => studyGroup.id !== id));
     });
   };
 
@@ -25,24 +21,20 @@ function StudyGroupsContainer() {
     studyGroupController
       .update(newStudyGroup.id, newStudyGroup)
       .then(result => {
-        if (result === 1) {
-          setStudyGroups(
-            studyGroups.map(studyGroup => {
-              if (studyGroup.id === newStudyGroup.id) {
-                return newStudyGroup;
-              }
-              return studyGroup;
-            })
-          );
-        }
+        setStudyGroups(
+          studyGroups.map(studyGroup => {
+            if (studyGroup.id === newStudyGroup.id) {
+              return newStudyGroup;
+            }
+            return studyGroup;
+          })
+        );
       });
   };
 
   const handleCreation = newStudyGroup => {
     studyGroupController.create(newStudyGroup).then(id => {
-      if (id !== undefined) {
-        setStudyGroups([...studyGroups, { id, ...newStudyGroup }]);
-      }
+      setStudyGroups([...studyGroups, { id, ...newStudyGroup }]);
     });
   };
 

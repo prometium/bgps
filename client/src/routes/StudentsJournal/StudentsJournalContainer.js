@@ -13,9 +13,7 @@ function StudentsJournalContainer() {
 
   React.useEffect(() => {
     studyGroupController.getAll().then(studyGroups => {
-      if (studyGroups) {
-        setStudyGroups(studyGroups);
-      }
+      setStudyGroups(studyGroups);
     });
   }, []);
 
@@ -59,11 +57,7 @@ function StudentsJournalContainer() {
     if (inputs.study_group_id !== '-1') {
       journalRecordController
         .getAllByStudyGroup(inputs.study_group_id)
-        .then(journalRecords => {
-          if (journalRecords) {
-            handleResult(journalRecords);
-          }
-        });
+        .then(handleResult);
     } else {
       journalRecordController.getAll().then(handleResult);
     }
